@@ -21,7 +21,7 @@ class Matkul extends BaseController
     public function index()
     {
         $data = [
-            'data'  => $this->matkul->paginate('2', 'matkul'),
+            'data'  => $this->matkul->paginate('5', 'matkul'),
             'title' => 'List Matkul',
             'pager' => $this->matkul->pager,
         ];

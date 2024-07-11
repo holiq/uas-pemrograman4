@@ -28,7 +28,7 @@ class Jadwal extends BaseController
     public function index()
     {
         $data = [
-            'data'  => $this->jadwal->withMatkul()->withDosen()->paginate('2', 'jadwal'),
+            'data'  => $this->jadwal->withMatkul()->withDosen()->paginate('5', 'jadwal'),
             'title' => 'List Jadwal',
             'pager' => $this->jadwal->pager,
         ];

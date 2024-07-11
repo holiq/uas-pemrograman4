@@ -23,7 +23,7 @@ class Dosen extends BaseController
     public function index()
     {
         $data = [
-            'data'  => $this->dosen->paginate('2', 'dosen'),
+            'data'  => $this->dosen->paginate('5', 'dosen'),
             'title' => 'List Dosen',
             'pager' => $this->dosen->pager,
         ];
