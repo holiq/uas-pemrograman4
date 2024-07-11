@@ -20,3 +20,10 @@ $routes->post('/matkul/store', 'Matkul::store');
 $routes->get('/matkul/edit/(:num)', 'Matkul::edit/$1');
 $routes->put('/matkul/update/(:num)', 'Matkul::update/$1');
 $routes->delete('/matkul/delete/(:num)', 'Matkul::destroy/$1');
+
+$routes->get('/jadwal', 'Jadwal::index');
+$routes->get('/jadwal/create', 'Jadwal::create');
+$routes->post('/jadwal/store', 'Jadwal::store');
+$routes->get('/jadwal/edit/(:num)', 'Jadwal::edit/$1');
+$routes->put('/jadwal/update/(:num)', 'Jadwal::update/$1');
+$routes->delete('/jadwal/delete/(:num)', 'Jadwal::destroy/$1');
