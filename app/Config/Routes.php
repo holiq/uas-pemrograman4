@@ -6,6 +6,9 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/', 'Dashboard::index');
+$routes->get('/notifikasi/(:num)/hadir', 'Dashboard::hadir/$1');
+$routes->get('/notifikasi/(:num)/tidak-hadir', 'Dashboard::tidakHadir/$1');
+
 
 $routes->get('/dosen', 'Dosen::index');
 $routes->get('/dosen/create', 'Dosen::create');
