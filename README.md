@@ -1,68 +1,41 @@
-# CodeIgniter 4 Application Starter
+# UAS Pemrograman 4
 
-## What is CodeIgniter?
-
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
-
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
-
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
-
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
-
-## Installation & updates
-
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
-
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
-
-## Setup
-
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
-
-## Important Change with index.php
-
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
-
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
-
-**Please** read the user guide for a better explanation of how CI4 works!
-
-## Repository Management
-
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
-
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
-
-## Server Requirements
-
-PHP version 8.1 or higher is required, with the following extensions installed:
-
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
-
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
-
-Additionally, make sure that the following extensions are enabled in your PHP:
-
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+1. Apakah coding login dalam codeigniter dibawah  ini benar atau salah?
+    ```html
+    <body class="text-center">
+        <main class="form-signin">
+            <?php if (!empty(session()->getFlashdata('error'))): ?>
+                <div class="alert alert-warning alert-dismissible fade shadow" role="alert">
+                    <?php echo session()->getFlashdata('error'); ?>
+                </div>
+            <?php endif; ?>
+            <form action="<?= base_url(); ?>/login/proses" method="post">
+                <?= csrf_field() ?>
+                <h1 class="h3 mb-3 fw-normal">Login</h1>
+                <input type="text" name="username" id="username" placeholder="Username" class="form-control" required autofocus>
+                <input type="password" name="password" id="password" placeholder="Password" class="form-control" required>
+                <button type="submit" class="w-100 btn btn-lg btn-block">Login</button>
+            </form>
+        </main>
+    </body>
+    ```
+2. Langkah yang harus dilakukan untuk menghubungkan CodeIgniter dengan Telegram?
+3. Langkah apa saja yang harus disiapkan agar project kita bisa dilihat secara luas oleh seluruh dunia?
+4. Apakah coding model CodeIgniter dibawah ini benar atau salah, berikan alasannya?
+   ```php
+   <?php
+   
+    namespace App\Models;
+    
+    use CodeIgniter\Model;
+    
+    Class UserModel extends Model
+    {
+        protected $table            = 'users';
+        protected $primaryKey       = 'username';
+        protected $returnType       = 'object';
+        protected $useTimestamps    = false;
+        protected $allowedFields    = [ 'username', 'password', 'name'];
+    }
+    ```
+5. Buatlah project dengan CodeIgniter dimana jika suatu dosen tidak ada akan mengirim email/telegram/wa ke pada semua mahasiswa yang mengikuti matakuliah tersebut, kalian pilih salah satu mengirim menggunakan apa?
