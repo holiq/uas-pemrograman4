@@ -1,6 +1,6 @@
-<?= $this->extend('layout'); ?>
+<?= $this->extend('layout') ?>
 
-<?= $this->section('content'); ?>
+<?= $this->section('content') ?>
 <div class="page-heading">
     <div class="page-title-headings mb-4">
         <h3>Notifikasi Absen</h3>
@@ -19,7 +19,7 @@
                 <thead>
                     <tr>
                         <th>Nama Dosen</th>
-                        <th>Nama Matkul</th>
+                        <th>Matkul</th>
                         <th>Semester</th>
                         <th class="text-center">Aksi</th>
                     </tr>
@@ -32,8 +32,8 @@
                             <td><?= $jadwal->nama_matkul ?></td>
                             <td><?= $jadwal->semester ?></td>
                             <td class="text-center">
-                                <a href="<?= route_to('Dashboard::hadir', $jadwal->id_jadwal); ?>" class="btn-link">Hadir</a>
-                                <a href="<?= route_to('Dashboard::tidakHadir', $jadwal->id_jadwal); ?>" class="btn-link text-danger">Tidak Hadir</a>
+                                <a href="<?= route_to('Dashboard::hadir', $jadwal->id_jadwal); ?>" class="btn btn-primary">Hadir</a>
+                                <a href="<?= route_to('Dashboard::tidakHadir', $jadwal->id_jadwal); ?>" class="btn btn-danger">Tidak Hadir</a>
                             </td>
                         </tr>
                     <?php endforeach ?>
@@ -43,4 +43,4 @@
     </div>
 </div>
 
-<?= $this->endSection(); ?>
+<?= $this->endSection() ?>

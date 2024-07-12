@@ -5,13 +5,15 @@ namespace App\Controllers;
 use App\Models\Jadwal as JadwalModel;
 use App\Models\Matkul;
 use App\Models\Dosen;
+use CodeIgniter\HTTP\RedirectResponse;
+use ReflectionException;
 
 class Jadwal extends BaseController
 {
-    protected $jadwal;
-    protected $dosen;
-    protected $matkul;
-    protected $rules;
+    protected JadwalModel $jadwal;
+    protected Dosen $dosen;
+    protected Matkul $matkul;
+    protected array $rules;
 
     public function __construct()
     {
@@ -25,18 +27,18 @@ class Jadwal extends BaseController
         ];
     }
 
-    public function index()
+    public function index(): string
     {
         $data = [
-            'data'  => $this->jadwal->withMatkul()->withDosen()->paginate('5', 'jadwal'),
+            'data'  => $this->jadwal->withMatkul()->withDosen()->paginate(perPage: '5', group: 'jadwal'),
             'title' => 'List Jadwal',
             'pager' => $this->jadwal->pager,
         ];
 
-        return view('jadwal/index', $data);
+        return view(name: 'jadwal/index', data: $data);
     }
 
-    public function create()
+    public function create(): string
     {
         $data = [
             'title' => 'Tambah Jadwal',
@@ -44,51 +46,57 @@ class Jadwal extends BaseController
             'matkul' => $this->matkul->findAll(),
         ];
 
-        return view('jadwal/create', $data);
+        return view(name: 'jadwal/create', data: $data);
     }
 
-    public function store()
+    /**
+     * @throws ReflectionException
+     */
+    public function store(): RedirectResponse
     {
         $data = $this->request->getPost();
 
-        if (! $this->validateData($data, $this->rules)) {
-            return redirect()->back()->with('message', $this->validator->getErrors());
+        if (! $this->validateData(data: $data, rules: $this->rules)) {
+            return redirect()->back()->with(key: 'message', message:  $this->validator->getErrors());
         }
 
-        $this->jadwal->save($data);
+        $this->jadwal->save(row: $data);
 
-        return redirect()->route('Jadwal::index')->with('message', 'Sukses tambah data');
+        return redirect()->route(route: 'Jadwal::index')->with(key: 'message', message: 'Sukses tambah data');
     }
 
-    public function edit(int $id)
+    public function edit(int $id): string
     {
         $data = [
             'title' => 'Edit Jadwal',
-            'jadwal' => $this->jadwal->withDosen()->withMatkul()->find($id),
+            'jadwal' => $this->jadwal->withDosen()->withMatkul()->find(id: $id),
             'dosen' => $this->dosen->findAll(),
             'matkul' => $this->matkul->findAll(),
         ];
 
-        return view('jadwal/edit', $data);
+        return view(name: 'jadwal/edit', data: $data);
     }
 
-    public function update(int $id)
+    /**
+     * @throws ReflectionException
+     */
+    public function update(int $id): RedirectResponse
     {
         $data = $this->request->getPost();
 
-        if (! $this->validateData($data, $this->rules)) {
-            return redirect()->back()->with('message', $this->validator->getErrors());
+        if (! $this->validateData(data: $data, rules: $this->rules)) {
+            return redirect()->back()->with(key: 'message', message:  $this->validator->getErrors());
         }
 
-        $this->jadwal->update($id, $data);
+        $this->jadwal->update(id: $id, row: $data);
 
-        return redirect()->route('Jadwal::index')->with('message', 'Sukses ubah data');
+        return redirect()->route(route: 'Jadwal::index')->with(key: 'message', message: 'Sukses ubah data');
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id): RedirectResponse
     {
-        $this->jadwal->delete($id);
+        $this->jadwal->delete(id: $id);
 
-        return redirect()->back()->with('message', 'Sukses hapus data');
+        return redirect()->back()->with(key: 'message', message: 'Sukses hapus data');
     }
 }

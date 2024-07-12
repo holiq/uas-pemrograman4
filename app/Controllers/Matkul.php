@@ -3,11 +3,13 @@
 namespace App\Controllers;
 
 use App\Models\Matkul as MatkulModel;
+use CodeIgniter\HTTP\RedirectResponse;
+use ReflectionException;
 
 class Matkul extends BaseController
 {
-    protected $matkul;
-    protected $rules;
+    protected MatkulModel $matkul;
+    protected array $rules;
 
     public function __construct()
     {
@@ -18,62 +20,68 @@ class Matkul extends BaseController
         ];
     }
 
-    public function index()
+    public function index(): string
     {
         $data = [
-            'data'  => $this->matkul->paginate('5', 'matkul'),
+            'data'  => $this->matkul->paginate(perPage: '5', group: 'matkul'),
             'title' => 'List Matkul',
             'pager' => $this->matkul->pager,
         ];
 
-        return view('matkul/index', $data);
+        return view(name: 'matkul/index', data: $data);
     }
 
     public function create()
     {
-        return view('matkul/create', ['title' => 'Tambah Matkul']);
+        return view(name: 'matkul/create', data: ['title' => 'Tambah Matkul']);
     }
 
-    public function store()
+    /**
+     * @throws ReflectionException
+     */
+    public function store(): RedirectResponse
     {
         $data = $this->request->getPost();
 
-        if (! $this->validateData($data, $this->rules)) {
-            return redirect()->back()->with('message', $this->validator->getErrors());
+        if (! $this->validateData(data: $data, rules: $this->rules)) {
+            return redirect()->back()->with(key: 'message', message:  $this->validator->getErrors());
         }
 
-        $this->matkul->save($data);
+        $this->matkul->save(row: $data);
 
-        return redirect()->route('Matkul::index')->with('message', 'Sukses tambah data');
+        return redirect()->route(route: 'Matkul::index')->with(key: 'message', message: 'Sukses tambah data');
     }
 
     public function edit(int $id)
     {
         $data = [
             'title' => 'Edit Matkul',
-            'matkul' => $this->matkul->find($id),
+            'matkul' => $this->matkul->find(id: $id),
         ];
 
-        return view('matkul/edit', $data);
+        return view(name: 'matkul/edit', data: $data);
     }
 
-    public function update(int $id)
+    /**
+     * @throws ReflectionException
+     */
+    public function update(int $id): RedirectResponse
     {
         $data = $this->request->getPost();
 
-        if (! $this->validateData($data, $this->rules)) {
-            return redirect()->back()->with('message', $this->validator->getErrors());
+        if (! $this->validateData(data: $data, rules: $this->rules)) {
+            return redirect()->back()->with(key: 'message', message:  $this->validator->getErrors());
         }
 
-        $this->matkul->update($id, $data);
+        $this->matkul->update(id: $id, row: $data);
 
-        return redirect()->route('Matkul::index')->with('message', 'Sukses ubah data');
+        return redirect()->route(route: 'Matkul::index')->with(key: 'message', message: 'Sukses ubah data');
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id): RedirectResponse
     {
-        $this->matkul->delete($id);
+        $this->matkul->delete(id: $id);
 
-        return redirect()->back()->with('message', 'Sukses hapus data');
+        return redirect()->back()->with(key: 'message', message: 'Sukses hapus data');
     }
 }

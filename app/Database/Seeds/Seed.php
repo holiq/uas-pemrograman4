@@ -6,7 +6,7 @@ use CodeIgniter\Database\Seeder;
 
 class Seed extends Seeder
 {
-    public function run()
+    public function run(): void
     {
         $dosen = [
             [
@@ -30,7 +30,7 @@ class Seed extends Seeder
         ];
 
         foreach ($dosen as $data) {
-            $this->db->table('dosen')->insert($data);
+            $this->db->table(tableName: 'dosen')->insert(set: $data);
         }
 
         $matkul = [
@@ -61,7 +61,7 @@ class Seed extends Seeder
         ];
 
         foreach ($matkul as $data) {
-            $this->db->table('matkul')->insert($data);
+            $this->db->table(tableName: 'matkul')->insert(set: $data);
         }
 
         $jadwal = [
@@ -98,8 +98,22 @@ class Seed extends Seeder
         ];
 
         foreach ($jadwal as $data) {
-            $this->db->table('jadwal')->insert($data);
+            $this->db->table(tableName: 'jadwal')->insert(set: $data);
+        }
 
+        $admin = [
+            [
+                'username' => 'holiq',
+                'password' => md5(string: '11111111'),
+            ],
+            [
+                'username' => 'admin',
+                'password' => md5(string: 'admin123'),
+            ],
+        ];
+
+        foreach ($admin as $data) {
+            $this->db->table(tableName: 'admin')->insert(set: $data);
         }
     }
 }

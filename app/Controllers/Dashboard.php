@@ -3,10 +3,11 @@
 namespace App\Controllers;
 
 use App\Models\Jadwal;
+use CodeIgniter\HTTP\RedirectResponse;
 
 class Dashboard extends BaseController
 {
-    public $jadwal;
+    public Jadwal $jadwal;
 
     public function __construct()
     {
@@ -20,28 +21,28 @@ class Dashboard extends BaseController
             'title' => 'Dashboard',
         ];
 
-        return view('home', $data);
+        return view(name: 'home',data:  $data);
     }
 
-    public function hadir(int $id)
+    public function hadir(int $id): RedirectResponse
     {
-        $jadwal = $this->jadwal->withMatkul()->withDosen()->find($id);
+        $jadwal = $this->jadwal->withMatkul()->withDosen()->find(id: $id);
 
         $msg = "Assalamu'alaikum wr.wb.,\n\nPemberitahuan untuk matakuliah $jadwal->nama_matkul pada semester $jadwal->semester dengan dosen $jadwal->nama_dosen akan masuk seperti biasanya.\n\nSekian terimakasih,\nWassalamualaikum wr.wb.";
 
-        sendTelegramNotification($msg);
+        sendTelegramNotification(text: $msg);
 
-        return redirect()->back()->with('message ', 'Notifikasi Terkirim!');
+        return redirect()->route(route: 'Dashboard::index')->with(key: 'message', message: 'Notifikasi terkirim!');
     }
 
-    public function tidakHadir(int $id)
+    public function tidakHadir(int $id): RedirectResponse
     {
-        $jadwal = $this->jadwal->withMatkul()->withDosen()->find($id);
+        $jadwal = $this->jadwal->withMatkul()->withDosen()->find(id: $id);
 
         $msg = "Assalamu'alaikum wr.wb.,\n\nPemberitahuan untuk matakuliah $jadwal->nama_matkul pada semester $jadwal->semester dengan dosen $jadwal->nama_dosen tidak dapat mengisi perkuliahan.\n\nSekian terimakasih,\nWassalamualaikum wr.wb.";
 
-        sendTelegramNotification($msg);
+        sendTelegramNotification(text: $msg);
 
-        return redirect()->back()->with('message ', 'Notifikasi Terkirim!');
+        return redirect()->route(route: 'Dashboard::index')->with(key: 'message', message: 'Notifikasi terkirim!');
     }
 }

@@ -4,18 +4,17 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Jadwal extends Model
+class Admin extends Model
 {
-    protected $table            = 'jadwal';
-    protected $primaryKey       = 'id_jadwal';
+    protected $table            = 'admin';
+    protected $primaryKey       = 'id_admin';
     protected $useAutoIncrement = true;
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'dosen_id',
-        'matkul_id',
-        'semester',
+        'username',
+        'password',
     ];
 
     protected bool $allowEmptyInserts = false;
@@ -47,16 +46,4 @@ class Jadwal extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
-
-    public function withDosen(): Jadwal
-    {
-        return $this->join(table: 'dosen', cond: 'dosen.id_dosen = jadwal.dosen_id', type: 'left')
-            ->select(select: 'jadwal.*, dosen.nama_dosen');
-    }
-
-    public function withMatkul(): Jadwal
-    {
-        return $this->join(table: 'matkul', cond: 'matkul.id_matkul = jadwal.matkul_id', type: 'left')
-            ->select(select: 'jadwal.*, matkul.nama_matkul');
-    }
 }

@@ -6,9 +6,9 @@ use CodeIgniter\Database\Migration;
 
 class Jadwal extends Migration
 {
-    public function up()
+    public function up(): void
     {
-        $this->forge->addField([
+        $this->forge->addField(fields: [
             'id_jadwal'          => [
                 'type'           => 'INT',
                 'constraint'     => 11,
@@ -30,14 +30,14 @@ class Jadwal extends Migration
                 'constraint'     => 11,
             ]
         ]);
-        $this->forge->addKey('id_jadwal', true);
-        $this->forge->addForeignKey('dosen_id', 'dosen', 'id_dosen');
-        $this->forge->addForeignKey('matkul_id', 'matkul', 'id_matkul');
-        $this->forge->createTable('jadwal');
+        $this->forge->addKey(key: 'id_jadwal', primary: true);
+        $this->forge->addForeignKey(fieldName: 'dosen_id', tableName: 'dosen', tableField: 'id_dosen');
+        $this->forge->addForeignKey(fieldName: 'matkul_id', tableName: 'matkul', tableField: 'id_matkul');
+        $this->forge->createTable(table: 'jadwal');
     }
 
-    public function down()
+    public function down(): void
     {
-        $this->forge->dropTable('jadwal');
+        $this->forge->dropTable(tableName: 'jadwal');
     }
 }

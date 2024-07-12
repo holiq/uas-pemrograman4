@@ -9,7 +9,7 @@
                     <?php echo session()->getFlashdata('error'); ?>
                 </div>
             <?php endif; ?>
-            <form action="<?= base_url(); ?>/login/proses" method="post">
+            <form action="<?= bese_url(); ?>/login/proses" method="post">
                 <?= csrf_field() ?>
                 <h1 class="h3 mb-3 fw-normal">Login</h1>
                 <input type="text" name="username" id="username" placeholder="Username" class="form-control" required autofocus>
@@ -39,3 +39,23 @@
     }
     ```
 5. Buatlah project dengan CodeIgniter dimana jika suatu dosen tidak ada akan mengirim email/telegram/wa ke pada semua mahasiswa yang mengikuti matakuliah tersebut, kalian pilih salah satu mengirim menggunakan apa?
+
+# Installasi
+
+```bash
+git clone https://github.com/holiq/uas-pemrograman4.git
+cd uas-pemrograman4
+composer install --prefer-dist
+cp env .env
+php spark key:generate
+
+# atur database pada .env
+# migrate dan seed data
+php spark migrate
+php spark db:seed Seed
+# atau import file sql
+
+# autur cahtbot token dan chat id pada env
+
+php spark serve
+```
